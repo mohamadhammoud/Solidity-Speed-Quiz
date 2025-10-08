@@ -11,5 +11,12 @@ contract Bytes {
         // ...
         // etc
 
-   }
+        bytes memory result = new bytes(z);
+
+        for (uint8 i = 0; i < z; i++) {
+            result[i] = bytes1(i);
+        }
+
+        return result;
+    }
 }
