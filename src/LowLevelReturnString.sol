@@ -6,8 +6,25 @@ contract LowLevelReturnString {
         // call function "baz()" on address a
         // do not use an interface
         // baz() returns a string. Return the string.
-        // However, if baz reverts, return an empty string 
-
+        // However, if baz reverts, return an empty string
+        // ---------------------------------
+        // bytes memory data = abi.encodeWithSignature("baz()");
+        // (bool success, bytes memory returnedData) = a.call(data);
+        // if (success == false) {
+        //     return "";
+        // }
+        // string memory str = abi.decode(returnedData, (string));
+        // return str;
+        // ---------------------------------
         // bonus challenge: use an interface and a high level call to accomplish the same task
+        try IBaz(a).baz() returns (string memory str) {
+            return str;
+        } catch (bytes memory lowLevelData) {
+            return "";
+        }
     }
+}
+
+interface IBaz {
+    function baz() external returns (string memory);
 }
