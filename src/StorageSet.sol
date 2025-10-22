@@ -7,8 +7,11 @@ library StorageSetLib {
     }
 
     // implement the function increment(...) that increments the value of x in the struct S
-}
 
+    function increment(S storage point) public {
+        point.x++;
+    }
+}
 
 contract StorageSet {
     StorageSetLib.S public s;
@@ -17,6 +20,6 @@ contract StorageSet {
 
     function main() public {
         // call s.increment() here
-        // s.increment();
+        s.increment();
     }
 }
