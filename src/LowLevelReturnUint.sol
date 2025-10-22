@@ -8,13 +8,15 @@ contract LowLevelReturnUint {
         // return the return value of the call
 
         bytes memory data = abi.encodeWithSignature("bar()");
-
         (bool success, bytes memory returnedData) = a.call(data);
-
         uint256 num = abi.decode(returnedData, (uint256));
-
         return num;
 
         // bonus challenge: use an interface and a high level call to accomplish the same task
+        return IBar(a).bar();
     }
+}
+
+interface IBar {
+    function bar() external returns (uint);
 }
